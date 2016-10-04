@@ -23,7 +23,7 @@ DATASET=/data/www
 VOLUME_QUOTA=20G
 ZCHECK=$(zfs list | grep -ic build)
 
-  if [$ZCHECK -gt 0 ]
+  if [$ZCHECK -gt 0 ];
     echo $DATASET exists
     else
     echo $DATASET does not exist, createing.........
