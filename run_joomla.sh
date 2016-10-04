@@ -10,8 +10,10 @@ S_DOMAIN=urbzdk.ba
 S_HOST_IP=${smtp_ip:-192.168.14.30}
 S_DNS_HOST_IP=${dns_lan_ip:-192.168.14.250}
 CT_NAME=www-urbzdk
+MOUNTPOINT=$VOLUME_BASE/$S_HOST.$S_DOMAIN
 
-# add static ip 
+
+add static ip 
   sudo ip addr show | grep $S_HOST_IP || \
   sudo ip addr add $S_HOST_IP/24 dev $S_DEV
 
@@ -19,22 +21,23 @@ CT_NAME=www-urbzdk
 
 create_volumes()
 {
-DATASET=/data/www
+DATASET=green/www
 VOLUME_QUOTA=20G
-ZCHECK=$(zfs list | grep -ic build)
+ZCHECK=$(/usr/local/sbin/zfs list | grep -ic build)
 
-  if [$ZCHECK -gt 0 ];
+  if [ $ZCHECK -gt 0 ];
+    then
     echo $DATASET exists
     else
     echo $DATASET does not exist, createing.........
-    sudo zfs create -o quota=$VOLUME_QUOTA -o mountpoint=$VOLUME_BASE/$S_REALM/$S_HOST $DATASET
+    sudo /usr/local/sbin/zfs create -o quota=$VOLUME_QUOTA -o mountpoint=$MOUNTPOINT  $DATASET
   fi 
 }
 
 create_volumes
 
-# run dokcer-compose 
+# run docker-compose 
 
-  $COMPOSE -d $COMPOSE_FILE up
+export MOUNTOINT=$MOUNTPOINT &&  $COMPOSE -f $COMPOSE_FILE up -d 
 
 

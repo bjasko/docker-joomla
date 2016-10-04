@@ -5,12 +5,12 @@ joomla:
   ports:
     - 8080:80
   volumes:
-    - $PWD/www:/var/www/html
+    - ${MOUNTPOINT}/www:/var/www/html
 
 joomladb:
   image: mysql:5.6
   container_name: joomladb
   volumes:
-    - $PWD/mysql:/var/lib/mysql
+    - ${MOUNTPOINT}/mysql:/var/lib/mysql
   environment:
-    MYSQL_ROOT_PASSWORD: password
+    MYSQL_ROOT_PASSWORD: x#c78nBcyw34
