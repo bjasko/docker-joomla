@@ -13,7 +13,7 @@ CT_NAME=www-urbzdk
 MOUNTPOINT=$VOLUME_BASE/$S_HOST.$S_DOMAIN
 
 
-add static ip 
+#add static ip 
   sudo ip addr show | grep $S_HOST_IP || \
   sudo ip addr add $S_HOST_IP/24 dev $S_DEV
 
